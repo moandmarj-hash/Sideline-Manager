@@ -1,4 +1,4 @@
-# Rugby Interchange Scheduler (stable fix)
+# Sideline Manager (stable fix)
 
 This build fixes the blank page caused by the missing `TopMetaBar` component and removes the private-deployment PWA hooks that were causing `manifest.webmanifest` 401 errors on protected Vercel deployments.
 
