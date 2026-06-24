@@ -66,7 +66,13 @@ label{display:grid;gap:6px;font-size:.94rem} label span{color:var(--muted)} inpu
 .disclosure summary{list-style:none;cursor:pointer;color:var(--muted);font-size:.92rem;padding:0 4px;font-weight:700}.disclosure summary::-webkit-details-marker{display:none}.disclosure{background:transparent}.discreet-tools{padding:12px}.history-card{padding:10px 12px}.status-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--border);border-radius:14px;background:var(--surface-alt)}.status-left{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.status-actions{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 .muted{color:var(--muted)} .small{font-size:.85rem} .mt{margin-top:14px} .mt-sm{margin-top:8px} .mt-xs{margin-top:6px} h1,h2,h3{margin:0} h2{font-size:1.05rem} h3{font-size:.98rem} ul{margin:8px 0 0;padding-left:18px}
 @media (max-width:1100px){.landing-grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (max-width:720px){.container{padding:8px}.summary-grid,.grid.three,.grid.two-up,.console-middle,.console-bottom{grid-template-columns:1fr}.hero{grid-template-columns:auto 1fr;gap:10px;padding:14px}.hero-icon-shell{padding:8px;border-radius:24px}.hero-icon-tint{padding:8px;border-radius:20px}.brand-mark{width:62px;height:62px}.brand-mark.landing-size{width:88px;height:88px}.title-badge.app h1{font-size:1.42rem}.title-badge.landing h1{font-size:1.55rem}.grass-strip{width:170px}.grass-strip.large{width:210px}.hero-tagline{font-size:.68rem;letter-spacing:.12em}.landing-brand{grid-template-columns:auto 1fr}.timer-strip{grid-template-columns:minmax(0,1fr) auto;align-items:start}.timer-actions-inline{grid-template-columns:1fr}.timer-value{font-size:1.65rem}.minutes-summary-badges{justify-content:flex-start}}
+.banner-title-text{font-size:1.22rem}
+.landing-banner-title{font-size:1.34rem}
+.grass-strip{width:150px}
+.grass-strip.large{width:190px}
+.hero-tagline{font-size:.60rem;letter-spacing:.10em}
+.hero{grid-template-columns:auto 1fr;gap:10px;padding:14px}
+.hero-copy,.landing-copy{gap:3px}
 .plain-banner-copy{
   display:grid;
   justify-items:center;
