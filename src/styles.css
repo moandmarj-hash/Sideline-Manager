@@ -13,9 +13,22 @@ button,input,textarea,select,summary{font:inherit} button{cursor:pointer} button
 .striped-card::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(180deg,rgba(224,70,75,.08) 0, rgba(224,70,75,.08) 28px, rgba(255,255,255,.96) 28px, rgba(255,255,255,.96) 56px);pointer-events:none}
 .striped-hero>*,.striped-card>*{position:relative;z-index:1}
 .hero{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:16px;border-radius:28px;padding:16px 18px;background:linear-gradient(180deg,#c82b31 0%,#e0464b 52%,#cf2f35 100%);box-shadow:0 18px 40px rgba(161,31,39,.22)}
-.hero-icon-shell{background:rgba(255,255,255,.28);backdrop-filter:blur(2px);border:1px solid rgba(255,255,255,.32);border-radius:28px;padding:10px;box-shadow:0 8px 18px rgba(0,0,0,.12)}
-.hero-icon-tint{display:grid;place-items:center;background:#cbd5e1;border-radius:24px;padding:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
-``
+.hero-icon-shell{
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+  backdrop-filter: none;
+}
+
+.hero-icon-tint{
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  border-radius: 0;
+}
 .hero-copy,.landing-copy{display:grid;gap:4px;min-width:0}.hero-banner{justify-content:flex-start}
 .hero{
   display:grid;
