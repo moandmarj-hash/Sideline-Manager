@@ -126,7 +126,7 @@ function BrandMark({ landing=false }) { return <img src="/icon.svg" alt="Sidelin
 function GrassStrip({ large=false }) { return <img src="/grass.svg" alt="Green grass decoration" className={`grass-strip ${large ? 'large': ''}`} /> }
 function Badge({ tone='slate', children }) { return <span className={`badge ${tone}`}>{children}</span> }
 function PlayerChip({ name, tone='slate' }) { return <span className={`chip ${tone}`}>{name}</span> }
-function ChipRow({ title, names, tone, emptyText='None' }) { const list=asArray(names); return <div><div className="eyebrow">{title}</div><div className="chip-wrap compact">{list.length ? list.map((n)=><PlayerChip key={`${title}-${n}`} name={n} tone={tone} />) : <div className="muted">{emptyText}</div>}</div></div> }
+function ChipRow({ title, names, tone, emptyText='None' }) { const list=asArray(names); return <div className="chip-row-block"><div className="eyebrow">{title}</div><div className="chip-wrap compact">{list.length ? list.map((n)=><PlayerChip key={`${title}-${n}`} name={n} tone={tone} />) : <div className="muted">{emptyText}</div>}</div></div> }
 function StatusChip({ status }) { const tone=status==='Unavailable'?'red':status==='Returning'?'green':'slate'; return <Badge tone={tone}>{status}</Badge> }
 function Disclosure({ title, children, defaultOpen=false }) { return <details className="disclosure no-print" open={defaultOpen}><summary>{title}</summary><div className="stack mt-sm">{children}</div></details> }
 
