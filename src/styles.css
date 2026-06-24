@@ -16,7 +16,27 @@ button,input,textarea,select,summary{font:inherit} button{cursor:pointer} button
 .hero-icon-shell{background:rgba(255,255,255,.28);backdrop-filter:blur(2px);border:1px solid rgba(255,255,255,.32);border-radius:28px;padding:10px;box-shadow:0 8px 18px rgba(0,0,0,.12)}
 .hero-icon-tint{display:grid;place-items:center;background:#cbd5e1;border-radius:24px;padding:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
 ``
-.hero-copy,.landing-copy{display:grid;gap:6px;min-width:0}.hero-banner{justify-content:flex-start}
+.hero-copy,.landing-copy{display:grid;gap:4px;min-width:0}.hero-banner{justify-content:flex-start}
+.hero{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  align-items:center;
+  gap:16px;
+}
+
+.banner-copy,
+.landing-copy{
+  width:100%;
+}
+
+.hero-tagline{
+  text-align:center;
+}
+
+.grass-strip,
+.grass-strip.large{
+  justify-self:center;
+}
 .brand-mark{width:80px;height:80px;filter:drop-shadow(0 6px 14px rgba(20,20,20,.12));flex:0 0 auto}.brand-mark.landing-size{width:104px;height:104px}
 .title-badge{display:inline-block;max-width:max-content;background:rgba(255,255,255,.96);border:2px solid rgba(255,255,255,.82);border-radius:18px;padding:8px 18px;box-shadow:0 8px 20px rgba(0,0,0,.10)}
 .title-badge h1{margin:0;color:#0B2347;letter-spacing:.015em;font-weight:900;text-shadow:0 1px 0 rgba(255,255,255,.5)} .title-badge.app h1{font-size:2.55rem;line-height:1}.title-badge.landing h1{font-size:2.2rem;line-height:1}
