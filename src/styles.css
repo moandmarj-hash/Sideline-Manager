@@ -46,3 +46,25 @@ label{display:grid;gap:6px;font-size:.94rem} label span{color:var(--muted)} inpu
 .muted{color:var(--muted)} .small{font-size:.85rem} .mt{margin-top:14px} .mt-sm{margin-top:8px} .mt-xs{margin-top:6px} h1,h2,h3{margin:0} h2{font-size:1.05rem} h3{font-size:.98rem} ul{margin:8px 0 0;padding-left:18px}
 @media (max-width:1100px){.landing-grid{grid-template-columns:1fr}.summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:720px){.container{padding:8px}.summary-grid,.grid.three,.grid.two-up,.console-middle,.console-bottom{grid-template-columns:1fr}.hero{grid-template-columns:auto 1fr;gap:10px;padding:14px}.hero-icon-shell{padding:8px;border-radius:24px}.hero-icon-tint{padding:8px;border-radius:20px}.brand-mark{width:62px;height:62px}.brand-mark.landing-size{width:88px;height:88px}.title-badge.app h1{font-size:1.42rem}.title-badge.landing h1{font-size:1.55rem}.grass-strip{width:170px}.grass-strip.large{width:210px}.hero-tagline{font-size:.68rem;letter-spacing:.12em}.landing-brand{grid-template-columns:auto 1fr}.timer-strip{grid-template-columns:minmax(0,1fr) auto;align-items:start}.timer-actions-inline{grid-template-columns:1fr}.timer-value{font-size:1.65rem}.minutes-summary-badges{justify-content:flex-start}}
+.plain-banner-copy{
+  display:grid;
+  justify-items:center;
+  align-content:center;
+  width:100%;
+  min-height:100%;
+}
+
+.banner-title-text{
+  margin:0;
+  color:#0B2347;
+  font-weight:900;
+  letter-spacing:.015em;
+  line-height:1;
+  text-align:center;
+  font-size:2.28rem;
+  text-shadow:0 1px 0 rgba(255,255,255,.28);
+}
+
+.landing-banner-title{
+  font-size:2.08rem;
+}
