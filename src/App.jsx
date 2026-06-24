@@ -122,7 +122,7 @@ function buildSchedule({ whitePlayers, redPlayers, totalOnField, intervals, inte
   return { rows, summary, targetMinutesPerPlayer, spreadMinutes }
 }
 
-function BrandMark({ landing=false }) { return <img src="/icon.svg" alt="Sideline Manager icon" className={`brand-mark ${landing ? 'landing-size' : ''}`} /> }
+function BrandMark({ landing=false }) { return <img src="/image.png" alt="Sideline Manager icon" className={`brand-mark ${landing ? 'landing-size' : ''}`} /> }
 function GrassStrip({ large=false }) { return <img src="/grass.svg" alt="Green grass decoration" className={`grass-strip ${large ? 'large': ''}`} /> }
 function Badge({ tone='slate', children }) { return <span className={`badge ${tone}`}>{children}</span> }
 function PlayerChip({ name, tone='slate' }) { return <span className={`chip ${tone}`}>{name}</span> }
