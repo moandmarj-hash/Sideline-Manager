@@ -1,0 +1,40 @@
+APP.JSX PATCH
+-------------
+1) Change current block split badge:
+- <Badge tone="red">{row.splitLabel}</Badge>
++ <Badge tone="amber">{row.splitLabel}</Badge>
+
+2) Change ChipRow wrapper:
+- return <div><div className="eyebrow">{title}</div><div className="chip-wrap compact">{list.length ? list.map((n)=><PlayerChip key={`${title}-${n}`} name={n} tone={tone} />) : <div className="muted">{emptyText}</div>}</div></div>
++ return <div className="chip-row-block"><div className="eyebrow">{title}</div><div className="chip-wrap compact">{list.length ? list.map((n)=><PlayerChip key={`${title}-${n}`} name={n} tone={tone} />) : <div className="muted">{emptyText}</div>}</div></div>
+
+STYLES.CSS PATCH
+----------------
+1)
+- .hero-tagline{font-size:.92rem;letter-spacing:.15em;font-weight:800;color:#b9262e;padding-left:2px}.landing-tag{color:#fff7f7}
++ .hero-tagline{font-size:.88rem;letter-spacing:.13em;font-weight:800;color:#111111;padding-left:2px}.landing-tag{color:#111111}
+
+2)
+- .btn-primary{background:var(--brand-red-dark);color:white}
++ .btn-primary{background:#111111;color:white}
+
+3)
+- .title-badge.app h1{font-size:2.55rem;line-height:1}.title-badge.landing h1{font-size:2.2rem;line-height:1}
++ .title-badge.app h1{font-size:2.42rem;line-height:1}.title-badge.landing h1{font-size:2.08rem;line-height:1}
+
+4)
+- .hero-copy,.landing-copy{display:grid;gap:6px;min-width:0}.hero-banner{justify-content:flex-start}
++ .hero-copy,.landing-copy{display:grid;gap:4px;min-width:0}.hero-banner{justify-content:flex-start}
+
+5)
+- .grass-strip{width:290px;max-width:100%;height:auto;display:block}.grass-strip.large{width:330px}
++ .grass-strip{width:280px;max-width:100%;height:auto;display:block}.grass-strip.large{width:320px}
+
+6) Add:
++ .chip-row-block{display:grid;align-content:start;min-height:74px}
++ .console-panel .chip-row-block + .chip-row-block{margin-top:8px}
++ .banner-copy{align-content:center}
+
+7) Mobile media query only:
+- .title-badge.app h1{font-size:1.42rem}.title-badge.landing h1{font-size:1.55rem}.grass-strip{width:170px}.grass-strip.large{width:210px}.hero-tagline{font-size:.68rem;letter-spacing:.12em}
++ .title-badge.app h1{font-size:1.34rem}.title-badge.landing h1{font-size:1.46rem}.grass-strip{width:160px}.grass-strip.large{width:200px}.hero-tagline{font-size:.62rem;letter-spacing:.11em}
