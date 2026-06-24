@@ -14,7 +14,8 @@ button,input,textarea,select,summary{font:inherit} button{cursor:pointer} button
 .striped-hero>*,.striped-card>*{position:relative;z-index:1}
 .hero{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:16px;border-radius:28px;padding:16px 18px;background:linear-gradient(180deg,#c82b31 0%,#e0464b 52%,#cf2f35 100%);box-shadow:0 18px 40px rgba(161,31,39,.22)}
 .hero-icon-shell{background:rgba(255,255,255,.28);backdrop-filter:blur(2px);border:1px solid rgba(255,255,255,.32);border-radius:28px;padding:10px;box-shadow:0 8px 18px rgba(0,0,0,.12)}
-.hero-icon-tint{display:grid;place-items:center;background:#e95a5f;border-radius:24px;padding:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.35)}
+.hero-icon-tint{display:grid;place-items:center;background:#cbd5e1;border-radius:24px;padding:10px;box-shadow:inset 0 1px 0 rgba(255,255,255,.55)}
+``
 .hero-copy,.landing-copy{display:grid;gap:6px;min-width:0}.hero-banner{justify-content:flex-start}
 .brand-mark{width:80px;height:80px;filter:drop-shadow(0 6px 14px rgba(20,20,20,.12));flex:0 0 auto}.brand-mark.landing-size{width:104px;height:104px}
 .title-badge{display:inline-block;max-width:max-content;background:rgba(255,255,255,.96);border:2px solid rgba(255,255,255,.82);border-radius:18px;padding:8px 18px;box-shadow:0 8px 20px rgba(0,0,0,.10)}
