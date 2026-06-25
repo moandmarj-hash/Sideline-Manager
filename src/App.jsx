@@ -137,7 +137,7 @@ function LandingPage({ onOpenManager, domainIdeas }) {
 function DateBar({ gameDate, setGameDate }) { return <section className="card compact-meta no-print"><label className="date-label solo"><span>Week / game date</span><input type="date" value={gameDate} onChange={(e)=>setGameDate(e.target.value || todayIso())} /></label></section> }
 
 function HeroBanner() {
-  return <section className="hero hero-banner no-print striped-hero"><div className="hero-icon-shell"><div className="hero-icon-tint"><BrandMark /></div></div><div className="hero-copy banner-copy plain-banner-copy"><h1 className="banner-title-text">SIDELINE MANAGER</h1><GrassStrip /><div className="hero-tagline">MANAGE. ROTATE. PERFORM.</div></div></section>
+  return <section className="hero hero-banner no-print striped-hero"><div className="hero-icon-shell"><div className="hero-icon-tint"><BrandMark /></div></div><div className="hero-copy banner-copy"><TitleLockup /></div></section>
 }
 
 function CompactLiveConsole({ row, totalBlocks, currentIndex, elapsedSeconds, totalMatchSeconds, timerRunning, onStartPause, onResetTimer, onNext, onBack, onSync, timerBlockIndex, mismatch }) {
