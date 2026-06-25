@@ -122,8 +122,8 @@ function buildSchedule({ whitePlayers, redPlayers, totalOnField, intervals, inte
   return { rows, summary, targetMinutesPerPlayer, spreadMinutes }
 }
 
-function BrandMark({ landing=false }) { return <img src="/icon.png" alt="Sideline Manager icon" className={`brand-mark ${landing ? 'landing-size' : ''}`} /> }
-function Title({ landing=false }) { return <img src="/Title.png?v=1" alt="Sideline Manager title" className={`Title ${landing ? 'landing-Title' : ''}`} /> }
+function BrandMark({ landing=false }) { return <img src="/icon.png?v=1" alt="Sideline Manager icon" className={`brand-mark ${landing ? 'landing-size' : ''}`} /> }
+function TitleLockup({ landing=false }) { return <img src="/Title.png?v=1" alt="Sideline Manager title" className={landing ? 'landing-title-lockup' : 'title-lockup'} /> }
 function Badge({ tone='slate', children }) { return <span className={`badge ${tone}`}>{children}</span> }
 function PlayerChip({ name, tone='slate' }) { return <span className={`chip ${tone}`}>{name}</span> }
 function ChipRow({ title, names, tone, emptyText='None' }) { const list=asArray(names); return <div className="chip-row-block"><div className="eyebrow">{title}</div><div className="chip-wrap compact">{list.length ? list.map((n)=><PlayerChip key={`${title}-${n}`} name={n} tone={tone} />) : <div className="muted">{emptyText}</div>}</div></div> }
