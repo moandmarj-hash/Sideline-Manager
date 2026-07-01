@@ -263,7 +263,33 @@ export default function App() {
   const applyOverrideUpdate=(squadKey, blockIndex, updates)=>{ setOverrides((current)=>{ const safe=asObject(current,{white:{},red:{}}); const next={...safe, [squadKey]: { ...asObject(safe[squadKey],{}) }}; const key=String(blockIndex); const merged=mergeOverride(next[squadKey][key], updates); if(!merged.forceOn.length && !merged.forceOff.length) delete next[squadKey][key]; else next[squadKey][key]=merged; return next }) }
   const clearOverride=(squadKey, blockIndex)=>setOverrides((current)=>{ const safe=asObject(current,{white:{},red:{}}); const next={...safe, [squadKey]: { ...asObject(safe[squadKey],{}) }}; delete next[squadKey][String(blockIndex)]; return next })
   const clearAllOverrides=()=>setOverrides({ white:{}, red:{} })
-  const onApplyQuickSwap=()=>{ if(!swapState.outgoingPlayer || !swapState.incomingPlayer) return; applyOverrideUpdate(swapState.outgoingSquad, currentInterval, { forceOff:[swapState.outgoingPlayer] }); applyOverrideUpdate(swapState.incomingSquad, currentInterval, { forceOn:[swapState.incomingPlayer] }); setSwapState((c)=>({ ...c, outgoingPlayer:'', incomingPlayer:'' })) }
+  const onApplyQuickSwap = () => {
+  if (!swapState.outgoingPlayer || !swapState.incomingPlayer) return
+
+  const nextBlockIndex = currentInterval + 1
+
+  // Current block: remove injured/tired player and bring replacement on now.
+  applyOverrideUpdate(swapState.outgoingSquad, currentInterval, {
+    forceOff: [swapState.outgoingPlayer],
+  })
+
+  applyOverrideUpdate(swapState.incomingSquad, currentInterval, {
+    forceOn: [swapState.incomingPlayer],
+  })
+
+  // Next block: protect the replacement so they are not immediately subbed back off.
+  if (nextBlockIndex <= maxIntervalIndex) {
+    applyOverrideUpdate(swapState.incomingSquad, nextBlockIndex, {
+      forceOn: [swapState.incomingPlayer],
+    })
+  }
+
+  setSwapState((c) => ({
+    ...c,
+    outgoingPlayer: '',
+    incomingPlayer: '',
+  }))
+}
   const onApplyFutureReturn=()=>{ if(!futureState.player) return; const blockIndex=Number(futureState.block); if(Number.isNaN(blockIndex)) return; applyOverrideUpdate(futureState.squad, blockIndex, { forceOn:[futureState.player] }); if(futureState.squad==='white'){ setUnavailableWhite((c)=>asArray(c).filter((n)=>n!==futureState.player)); setReturningWhite((c)=>uniq([...asArray(c), futureState.player])) } else { setUnavailableRed((c)=>asArray(c).filter((n)=>n!==futureState.player)); setReturningRed((c)=>uniq([...asArray(c), futureState.player])) } setFutureState((c)=>({ ...c, player:'' })) }
   const markUnavailable=(squadKey, player)=>{ if(squadKey==='white'){ setUnavailableWhite((c)=>uniq([...asArray(c), player])); setReturningWhite((c)=>asArray(c).filter((n)=>n!==player)); if(asArray(liveRow?.onWhite).includes(player)) applyOverrideUpdate('white', currentInterval, { forceOff:[player] }) } else { setUnavailableRed((c)=>uniq([...asArray(c), player])); setReturningRed((c)=>asArray(c).filter((n)=>n!==player)); if(asArray(liveRow?.onRed).includes(player)) applyOverrideUpdate('red', currentInterval, { forceOff:[player] }) } }
   const markAvailableAgain=(squadKey, player)=>{ if(squadKey==='white'){ setUnavailableWhite((c)=>asArray(c).filter((n)=>n!==player)); setReturningWhite((c)=>uniq([...asArray(c), player])) } else { setUnavailableRed((c)=>asArray(c).filter((n)=>n!==player)); setReturningRed((c)=>uniq([...asArray(c), player])) } }
