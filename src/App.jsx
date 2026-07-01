@@ -222,6 +222,8 @@ export default function App() {
   const [gameHistory, setGameHistory] = useState(saved.current.gameHistory)
   const [overrides, setOverrides] = useState(saved.current.overrides)
   const [swapState, setSwapState] = useState({ outgoingSquad: 'white', outgoingPlayer: '', incomingSquad: 'white', incomingPlayer: '' })
+  const [availabilityPrompts, setAvailabilityPrompts] = useState([])
+  const autoArchiveDoneRef = useRef(false)
   const [futureState, setFutureState] = useState({ squad: 'white', block: '1', player: '' })
 
   const intervals = Math.floor((halfMinutes*2)/intervalMinutes)
@@ -264,8 +266,80 @@ export default function App() {
   const applyOverrideUpdate=(squadKey, blockIndex, updates)=>{ setOverrides((current)=>{ const safe=asObject(current,{white:{},red:{}}); const next={...safe, [squadKey]: { ...asObject(safe[squadKey],{}) }}; const key=String(blockIndex); const merged=mergeOverride(next[squadKey][key], updates); if(!merged.forceOn.length && !merged.forceOff.length) delete next[squadKey][key]; else next[squadKey][key]=merged; return next }) }
   const clearOverride=(squadKey, blockIndex)=>setOverrides((current)=>{ const safe=asObject(current,{white:{},red:{}}); const next={...safe, [squadKey]: { ...asObject(safe[squadKey],{}) }}; delete next[squadKey][String(blockIndex)]; return next })
   const clearAllOverrides=()=>setOverrides({ white:{}, red:{} })
-  const onApplyQuickSwap = () => {
+  const promptToMakeAvailableAgain = (completedBlockIndex) => {
+  const duePrompts = availabilityPrompts.filter((item) => item.promptAfterBlock <= completedBlockIndex)
+
+  if (!duePrompts.length) return
+
+  duePrompts.forEach((item) => {
+    const shouldReturn = window.confirm(`${item.player} was removed after a quick swap. Make them available again?`)
+
+    if (shouldReturn) {
+      if (item.squad === 'white') {
+        setUnavailableWhite((current) => asArray(current).filter((name) => name !== item.player))
+        setReturningWhite((current) => uniq([...asArray(current), item.player]))
+      } else {
+        setUnavailableRed((current) => asArray(current).filter((name) => name !== item.player))
+        setReturningRed((current) => uniq([...asArray(current), item.player]))
+      }
+    }
+  })
+
+  setAvailabilityPrompts((current) =>
+    asArray(current).filter((item) => item.promptAfterBlock > completedBlockIndex)
+  )
+}
+ const onApplyQuickSwap = () => {
   if (!swapState.outgoingPlayer || !swapState.incomingPlayer) return
+
+  const nextBlockIndex = currentInterval + 1
+  const promptAfterBlock = currentInterval + 1
+
+  // Current block: remove outgoing player and bring replacement on now.
+  applyOverrideUpdate(swapState.outgoingSquad, currentInterval, {
+    forceOff: [swapState.outgoingPlayer],
+  })
+
+  applyOverrideUpdate(swapState.incomingSquad, currentInterval, {
+    forceOn: [swapState.incomingPlayer],
+  })
+
+  // Immediately withdraw the player who came off from future availability.
+  if (swapState.outgoingSquad === 'white') {
+    setUnavailableWhite((current) => uniq([...asArray(current), swapState.outgoingPlayer]))
+    setReturningWhite((current) => asArray(current).filter((name) => name !== swapState.outgoingPlayer))
+  } else {
+    setUnavailableRed((current) => uniq([...asArray(current), swapState.outgoingPlayer]))
+    setReturningRed((current) => asArray(current).filter((name) => name !== swapState.outgoingPlayer))
+  }
+
+  // Next block: keep replacement player on so they are not immediately subbed back off.
+  if (nextBlockIndex <= maxIntervalIndex) {
+    applyOverrideUpdate(swapState.incomingSquad, nextBlockIndex, {
+      forceOn: [swapState.incomingPlayer],
+    })
+
+    applyOverrideUpdate(swapState.outgoingSquad, nextBlockIndex, {
+      forceOff: [swapState.outgoingPlayer],
+    })
+  }
+
+  // After the next block, ask whether the removed player should return.
+  setAvailabilityPrompts((current) => [
+    ...asArray(current),
+    {
+      player: swapState.outgoingPlayer,
+      squad: swapState.outgoingSquad,
+      promptAfterBlock,
+    },
+  ])
+
+  setSwapState((current) => ({
+    ...current,
+    outgoingPlayer: '',
+    incomingPlayer: '',
+  }))
+}
 
   const nextBlockIndex = currentInterval + 1
 
