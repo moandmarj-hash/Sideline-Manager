@@ -155,7 +155,7 @@ function upcomingDiff(current, next) {
   }
 }
 
-function CompactLiveConsole({ row, nextRow={nextRow}, totalBlocks, currentIndex, elapsedSeconds, totalMatchSeconds, timerRunning, onStartPause, onResetTimer, onNext, onBack, onSync, timerBlockIndex, mismatch }) {
+function CompactLiveConsole({ row, nextRow, totalBlocks, currentIndex, elapsedSeconds, totalMatchSeconds, timerRunning, onStartPause, onResetTimer, onNext, onBack, onSync, timerBlockIndex, mismatch }) {
   if (!row) return null
   const atEnd=currentIndex>=totalBlocks-1, atStart=currentIndex<=0, isStart=!row.hasPrevious, remaining=Math.max(0,totalMatchSeconds-elapsedSeconds), progress=totalMatchSeconds?Math.min(100,(elapsedSeconds/totalMatchSeconds)*100):0
   const whiteUpcoming = nextRow
@@ -248,6 +248,7 @@ export default function App() {
   const maxIntervalIndex = Math.max(0, asArray(schedule.rows).length - 1)
   const timerBlockIndex = asArray(schedule.rows).length ? Math.min(Math.floor(elapsedSeconds / Math.max(1, blockSeconds)), maxIntervalIndex) : 0
   const mismatch = asArray(schedule.rows).length > 0 && currentInterval !== timerBlockIndex
+  const liveRow = asArray(schedule.rows)[currentInterval] ?? null
   const nextRow = asArray(schedule.rows)[currentInterval + 1] ?? null
   const whiteBench = liveRow ? availableWhite.filter((n)=>!asArray(liveRow.onWhite).includes(n)) : availableWhite
   const redBench = liveRow ? availableRed.filter((n)=>!asArray(liveRow.onRed).includes(n)) : availableRed
