@@ -123,3 +123,27 @@ label{display:grid;gap:6px;font-size:.94rem} label span{color:var(--muted)} inpu
   height:auto;
   object-fit:contain;
 }
+.on-field-section,
+.upcoming-section{
+  display:grid;
+  gap:10px;
+}
+
+.on-field-section{
+  padding:12px;
+  border-radius:16px;
+  background:rgba(255,255,255,.78);
+  border:1px solid var(--border);
+}
+
+.upcoming-section{
+  padding:12px;
+  border-radius:16px;
+  background:rgba(255,255,255,.55);
+  border:1px solid var(--border);
+}
+
+.chip.blue{
+  background:#dbeafe;
+  color:#1d4ed8;
+}
