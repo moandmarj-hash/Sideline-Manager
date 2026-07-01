@@ -140,7 +140,22 @@ function HeroBanner() {
   return <section className="hero hero-banner no-print striped-hero"><div className="hero-icon-shell"><div className="hero-icon-tint"><BrandMark /></div></div><div className="hero-copy banner-copy"><TitleLockup /></div></section>
 }
 
-function CompactLiveConsole({ row, totalBlocks, currentIndex, elapsedSeconds, totalMatchSeconds, timerRunning, onStartPause, onResetTimer, onNext, onBack, onSync, timerBlockIndex, mismatch }) {
+function intersection(a, b) {
+  return asArray(a).filter((name) => asArray(b).includes(name))
+}
+
+function upcomingDiff(current, next) {
+  const currentList = asArray(current)
+  const nextList = asArray(next)
+
+  return {
+    stayingOn: intersection(currentList, nextList),
+    comingOff: currentList.filter((name) => !nextList.includes(name)),
+    goingOn: nextList.filter((name) => !currentList.includes(name)),
+  }
+}
+
+function CompactLiveConsole({ row, nextRow={nextRow}, totalBlocks, currentIndex, elapsedSeconds, totalMatchSeconds, timerRunning, onStartPause, onResetTimer, onNext, onBack, onSync, timerBlockIndex, mismatch }) {
   if (!row) return null
   const atEnd=currentIndex>=totalBlocks-1, atStart=currentIndex<=0, isStart=!row.hasPrevious, remaining=Math.max(0,totalMatchSeconds-elapsedSeconds), progress=totalMatchSeconds?Math.min(100,(elapsedSeconds/totalMatchSeconds)*100):0
   return <section className="card live-console no-print striped-card"><div className="console-top"><div><div className="eyebrow">Current block</div><h1 className="console-block-title">{row.label}</h1><p className="muted small">Match minutes {row.matchLabel} · Split {row.splitLabel}</p></div></div><div className="timer-strip compact-two-col"><div className="timer-left"><div className="timer-badges-inline"><Badge tone={timerRunning?'green':'amber'}>{timerRunning?'Running':'Paused'}</Badge><Badge tone="amber">{row.splitLabel}</Badge></div><div className="eyebrow mt-xs">Game time</div><div className="timer-value">{formatTime(elapsedSeconds)}</div><div className="small muted">Remaining {formatTime(remaining)}</div></div><div className="timer-actions-inline vertical-actions"><button type="button" className="btn btn-primary" onClick={onStartPause}>{timerRunning?'Pause':'Start'}</button><button type="button" className="btn btn-ghost" onClick={onResetTimer}>Reset</button></div></div><div className="progress mt-sm"><div style={{width:`${progress}%`}} /></div>{mismatch ? <div className="alert alert-amber mt-sm compact-alert"><strong>Out of sync:</strong> timer says block {timerBlockIndex+1}. <button type="button" className="btn btn-warning mt-xs full" onClick={onSync}>Sync to timer block</button></div> : null}<div className="console-middle"><div className="console-panel"><div className="group-title">White squad</div><ChipRow title="Go on now" names={row.incomingWhite} tone="green" emptyText={isStart?'Starting group':'No changes'} /><ChipRow title="Come off now" names={row.outgoingWhite} tone="red" emptyText={isStart?'Start of game':'No changes'} /></div><div className="console-panel red-panel"><div className="group-title">Red squad</div><ChipRow title="Go on now" names={row.incomingRed} tone="green" emptyText={isStart?'Starting group':'No changes'} /><ChipRow title="Come off now" names={row.outgoingRed} tone="red" emptyText={isStart?'Start of game':'No changes'} /></div></div><div className="console-bottom"><button type="button" className="btn btn-ghost full" onClick={onBack} disabled={atStart}>Previous</button><button type="button" className="btn btn-primary full next-button" onClick={onNext} disabled={atEnd}>{atEnd?'Last block':'Next interval'}</button></div></section>
@@ -227,7 +242,7 @@ export default function App() {
   const maxIntervalIndex = Math.max(0, asArray(schedule.rows).length - 1)
   const timerBlockIndex = asArray(schedule.rows).length ? Math.min(Math.floor(elapsedSeconds / Math.max(1, blockSeconds)), maxIntervalIndex) : 0
   const mismatch = asArray(schedule.rows).length > 0 && currentInterval !== timerBlockIndex
-  const liveRow = asArray(schedule.rows)[currentInterval] ?? null
+  const nextRow = asArray(schedule.rows)[currentInterval + 1] ?? null
   const whiteBench = liveRow ? availableWhite.filter((n)=>!asArray(liveRow.onWhite).includes(n)) : availableWhite
   const redBench = liveRow ? availableRed.filter((n)=>!asArray(liveRow.onRed).includes(n)) : availableRed
   const overrideItems = useMemo(()=>{ const items=[]; ['white','red'].forEach((squadKey)=>{ const blockMap=asObject(asObject(overrides)[squadKey],{}); Object.entries(blockMap).forEach(([blockText, override])=>{ const blockIndex=Number(blockText); const row=asArray(schedule.rows)[blockIndex]; if(!row) return; const safe=normalizeOverride(override); if(!safe.forceOn.length && !safe.forceOff.length) return; items.push({ key:`${squadKey}-${blockIndex}`, squadLabel:squadKey==='white'?'White squad':'Red squad', blockIndex, blockLabel:row.label, forceOn:safe.forceOn, forceOff:safe.forceOff }) }) }); return items.sort((a,b)=>a.blockIndex-b.blockIndex || a.squadLabel.localeCompare(b.squadLabel)) }, [overrides, schedule.rows])
