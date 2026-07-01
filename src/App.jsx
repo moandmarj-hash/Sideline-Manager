@@ -155,7 +155,7 @@ function upcomingDiff(current, next) {
   }
 }
 
-function CompactLiveConsole({ row, nextRow={nextRow}, totalBlocks, currentIndex, elapsedSeconds, totalMatchSeconds, timerRunning, onStartPause, onResetTimer, onNext, onBack, onSync, timerBlockIndex, mismatch }) {
+function CompactLiveConsole({ row, nextRow, totalBlocks, currentIndex, elapsedSeconds, totalMatchSeconds, timerRunning, onStartPause, onResetTimer, onNext, onBack, onSync, timerBlockIndex, mismatch }) {
   if (!row) return null
   const atEnd=currentIndex>=totalBlocks-1, atStart=currentIndex<=0, isStart=!row.hasPrevious, remaining=Math.max(0,totalMatchSeconds-elapsedSeconds), progress=totalMatchSeconds?Math.min(100,(elapsedSeconds/totalMatchSeconds)*100):0
   const whiteUpcoming = nextRow
